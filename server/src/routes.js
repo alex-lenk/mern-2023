@@ -2,7 +2,7 @@ import express from 'express';
 import { check, validationResult } from 'express-validator';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import auth from './middleware.js';
+import auth, { validate } from './middleware.js';
 import User from './models/User.js';
 
 
@@ -11,7 +11,7 @@ const router = express.Router();
 router.post('/register', [
   check('email').isEmail(),
   check('password').isLength({ min: 8 }),
-], async (req, res) => {
+], validate, async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
@@ -53,7 +53,6 @@ router.post('/login', async (req, res) => {
   // Generate a JWT
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
   res.cookie('token', token, { httpOnly: true });
-  res.json({ token });
 });
 
 router.get('/profile', auth, async (req, res) => {

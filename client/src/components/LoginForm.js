@@ -25,7 +25,11 @@ function LoginForm() {
         userStore.setUser(response.data);
         navigate('/profile');
       } catch (error) {
-        toast.error('Invalid email or password');
+        if (error.response.status === 400) {
+          toast.error('Email is already in use');
+        } else {
+          toast.error('An unexpected error occurred');
+        }
         console.error(error);
       }
     },
@@ -33,6 +37,7 @@ function LoginForm() {
 
   return (
     <form onSubmit={ formik.handleSubmit }>
+      <h1>LoginForm</h1>
       <input
         type="email"
         name="email"

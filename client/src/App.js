@@ -7,10 +7,12 @@ import PrivateRoute from './components/PrivateRoute';
 import Profile from './components/Profile';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
     <div className="App">
+      <Navbar />
       <Routes>
         <Route path="/register" element={ <RegisterForm/> }/>
         <Route path="/login" element={ <LoginForm/> }/>

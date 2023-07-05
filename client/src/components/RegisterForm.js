@@ -1,8 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { register } from '../services/api';
-import { useNavigate } from 'react-router-dom';
 
 const validationSchema = yup.object({
   email: yup.string().email('Invalid email').required('Required'),
@@ -22,6 +23,11 @@ function RegisterForm() {
         await register(values.email, values.password);
         navigate('/login');
       } catch (error) {
+        if (error.response && error.response.status === 400) {
+          toast.error('Email is already in use');
+        } else {
+          toast.error('An unexpected error occurred');
+        }
         console.error(error);
       }
     },
@@ -29,6 +35,7 @@ function RegisterForm() {
 
   return (
     <form onSubmit={ formik.handleSubmit }>
+      <h1>RegisterForm</h1>
       <input
         type="email"
         name="email"

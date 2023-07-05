@@ -29,7 +29,7 @@ function Profile() {
       try {
         const fetchedUser = await getProfile();
         setUser(fetchedUser.data);
-        formik.setValues({ email: fetchedUser.data.email });
+        await formik.setValues({ email: fetchedUser.data.email });
       } catch (error) {
         console.error(error);
       }
