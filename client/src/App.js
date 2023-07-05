@@ -1,23 +1,24 @@
-import logo from './logo.svg';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import RegisterForm from './components/RegisterForm';
+import LoginForm from './components/LoginForm';
+import PrivateRoute from './components/PrivateRoute';
+import Profile from './components/Profile';
 import './App.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/register" element={ <RegisterForm/> }/>
+        <Route path="/login" element={ <LoginForm/> }/>
+        <Route path="/profile" element={ <PrivateRoute/> }>
+          <Route index element={ <Profile/> }/>
+        </Route>
+      </Routes>
+      <ToastContainer />
     </div>
   );
 }
