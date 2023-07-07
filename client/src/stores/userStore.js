@@ -10,6 +10,10 @@ class UserStore {
   setUser(user) {
     this.user = user;
   }
+
+  resetUser() {
+    this.user = null;
+  }
 }
 
 export default new UserStore();
